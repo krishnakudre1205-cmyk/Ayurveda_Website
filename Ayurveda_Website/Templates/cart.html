@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}Your Cart - Ayurveda Store{% endblock %}
+
+{% block content %}
+<h2>Your Shopping Cart</h2>
+
+<style>
+.cart-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.cart-card {
+    width: 220px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.cart-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+.cart-card h3 {
+    font-size: 18px;
+    margin: 10px 0 5px;
+}
+.cart-card .price {
+    font-weight: bold;
+    color: green;
+    margin: 8px 0;
+}
+.remove-btn {
+    background: red;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+}
+.remove-btn:hover {
+    background: darkred;
+}
+.checkout-btn {
+    margin-top: 20px;
+    display: inline-block;
+    background: green;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+.remove-all-btn {
+    margin-left: 15px;
+    background: #f44336;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+.remove-all-btn:hover {
+    background: #c62828;
+}
+.continue-btn {
+    margin-left: 15px;
+    background: #2196F3;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+.continue-btn:hover {
+    background: #1976D2;
+}
+</style>
+
+{% if cart_items %}
+  <!-- ✅ Grid Layout -->
+  <div class="cart-container">
+    {% for item in cart_items %}
+      <div class="cart-card">
+        <img src="{{ url_for('static', filename=item['image']) }}" alt="{{ item['name'] }}">
+        <h3>{{ item['name'] }}</h3>
+        <p class="price">₹{{ item['price'] }}</p>
+        
+        <!-- ✅ Confirmation added for single item remove -->
+        <a href="{{ url_for('remove_from_cart', product_name=item['name']) }}" 
+           class="remove-btn"
+           onclick="return confirm('Are you sure you want to remove {{ item['name'] }} from your cart?');">
+           ❌ Remove
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- ✅ Total + Checkout + Remove All + Continue Shopping -->
+  <h3 style="margin-top:20px;">Total: ₹{{ total }}</h3>
+  <a href="{{ url_for('checkout') }}" class="checkout-btn">Proceed to Checkout</a>
+
+  <a href="{{ url_for('clear_cart') }}" 
+     class="remove-all-btn"
+     onclick="return confirm('Are you sure you want to remove all items from your cart?');">
+     🗑 Remove All
+  </a>
+  <a href="{{ url_for('products_page') }}" class="continue-btn">⬅ Continue Shopping</a>
+{% else %}
+  <p>Your cart is empty.</p>
+  <a href="{{ url_for('products_page') }}" class="continue-btn">⬅ Continue Shopping</a>
+{% endif %}
+{% endblock %}

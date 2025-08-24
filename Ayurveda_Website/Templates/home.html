@@ -1,0 +1,300 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Ayurveda Website{% endblock %}
+
+{% block content %}
+<style>
+/* 🌿 General Ayurveda Theme */
+body {
+    font-family: "Georgia", serif;
+    background: #fdfaf3;
+    color: #2e2a1f;
+}
+
+/* 🌿 Hero Section */
+.hero {
+    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+                url("{{ url_for('static', filename='images/ayurveda-bg.jpg') }}") center/cover no-repeat;
+    color: white;
+    text-align: center;
+    padding: 100px 20px;
+    border-radius: 12px;
+}
+.hero h1 {
+    font-size: 42px;
+    margin-bottom: 10px;
+    font-family: "Times New Roman", serif;
+}
+.hero p {
+    font-size: 18px;
+    max-width: 600px;
+    margin: auto;
+}
+
+/* 🌿 Founder Section */
+.founders {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    margin: 60px auto;
+    width: 90%;
+    max-width: 1000px;
+}
+ .founder-box {
+    flex: 1;
+    text-align: center;
+    background: #fffef6;
+    border: 2px solid #e2d9c0;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0px 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.founder-box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0px 10px 20px rgba(0,0,0,0.15);
+}
+.founder-box img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #4caf50;
+    margin-bottom: 15px;
+}
+.founder-box h2 {
+    font-size: 22px;
+    margin-bottom: 8px;
+    color: #3e603d;
+}
+.founder-box p {
+    font-size: 15px;
+    line-height: 1.6;
+    max-width: 300px;
+    margin: 0 auto;
+    color: #555;
+}
+
+/* 🌿 Decorative Divider */
+.divider {
+    width: 120px;
+    height: 4px;
+    background: linear-gradient(to right, #6d9e58, #d4af37, #6d9e58);
+    margin: 40px auto;
+    border-radius: 2px;
+}
+
+/* 🌿 Benefits Section */
+.benefits {
+    background: #f9f6ef;
+    padding: 60px 20px;
+    border-radius: 12px;
+    margin: 40px auto;
+    max-width: 1100px;
+    text-align: center;
+}
+.benefits h2 {
+    color: #3e603d;
+    font-size: 28px;
+    margin-bottom: 40px;
+}
+.benefit-boxes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+}
+.benefit {
+    flex: 1;
+    min-width: 220px;
+    max-width: 280px;
+    background: #fffef6;
+    border: 1px solid #e2d9c0;
+    border-radius: 10px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0px 5px 12px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.benefit:hover {
+    transform: translateY(-8px);
+    box-shadow: 0px 10px 18px rgba(0,0,0,0.15);
+}
+.benefit img {
+    width: 70px;
+    margin-bottom: 15px;
+}
+.benefit h3 {
+    color: #4caf50;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+.benefit p {
+    font-size: 14px;
+    color: #444;
+}
+
+/* 🌿 Testimonials Section */
+.testimonials {
+    background: #f7f3e9;
+    padding: 50px 20px;
+    border-radius: 12px;
+    margin: 40px auto;
+    max-width: 1100px;
+}
+.testimonials h2 {
+    text-align: center;
+    color: #3e603d;
+    font-size: 28px;
+    margin-bottom: 30px;
+}
+.testimonial-boxes {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.testimonial {
+    flex: 1;
+    min-width: 250px;
+    max-width: 320px;
+    background: #fffef6;
+    border: 1px solid #e2d9c0;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0px 5px 12px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.testimonial:hover {
+    transform: translateY(-8px);
+    box-shadow: 0px 10px 18px rgba(0,0,0,0.15);
+}
+.testimonial img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid #6d9e58;
+    margin-bottom: 15px;
+    object-fit: cover;
+}
+.testimonial p {
+    font-style: italic;
+    color: #444;
+    margin-bottom: 10px;
+}
+.testimonial h4 {
+    margin: 0;
+    color: #3e603d;
+    font-weight: bold;
+}
+
+/* 🌿 Call to Action */
+.cta {
+    text-align: center;
+    margin: 50px 0;
+}
+.cta a {
+    text-decoration: none;
+    background: linear-gradient(to right, #6d9e58, #a8c66c);
+    color: white;
+    padding: 12px 25px;
+    font-size: 18px;
+    border-radius: 30px;
+    transition: 0.3s;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+}
+.cta a:hover {
+    background: linear-gradient(to right, #4caf50, #7cb342);
+    box-shadow: 0px 6px 12px rgba(0,0,0,0.25);
+}
+</style>
+
+<!-- 🌿 Hero Section -->
+<section class="hero">
+    <h1>🌱 Welcome to Ayurveda Store 🌱</h1>
+    <p>Discover the timeless wisdom of Ayurveda with our authentic herbal remedies and natural wellness products.</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- 🌿 Founders Section -->
+<section class="home">
+    <center>
+    <h1>Meet Our Founders</h1>
+    </center>
+<div class="founders">
+    <div class="founder-box">
+        <img src="{{ url_for('static', filename='images/founder.jpg') }}" alt="Founder">
+        <h2>About the Founder</h2>
+        <p>Our founder, <b>Dr. Aarav Sharma</b>, believes in the healing power of Ayurveda. 
+        He started this store with the vision of making natural remedies easily available to everyone.</p>
+    </div>
+    <div class="founder-box">
+        <img src="{{ url_for('static', filename='images/co.jpg') }}" alt="Co-Founder">
+        <h2>About the Co-Founder</h2>
+        <p>Our co-founder, <b>Dr. Soundarya Kudre</b>, shares the same mission and works passionately 
+        to bring authentic Ayurvedic products to people for a healthier life.</p>
+    </div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 🌿 Benefits of Ayurveda -->
+<section class="benefits">
+    <h2>✨ Benefits of Ayurveda ✨</h2>
+    <div class="benefit-boxes">
+        <div class="benefit">
+            <img src="{{ url_for('static', filename='images/boosts.jpg') }}" alt="Immunity">
+            <h3>Boosts Immunity</h3>
+            <p>Strengthens your natural defense system with herbs and holistic care.</p>
+        </div>
+        <div class="benefit">
+            <img src="{{ url_for('static', filename='images/relive.jpg') }}" alt="Stress Relief">
+            <h3>Relieves Stress</h3>
+            <p>Balances mind and body, reducing stress and improving mental clarity.</p>
+        </div>
+        <div class="benefit">
+            <img src="{{ url_for('static', filename='images/dig.jpg') }}" alt="Digestion">
+            <h3>Improves Digestion</h3>
+            <p>Enhances metabolism and promotes healthy digestive function.</p>
+        </div>
+        <div class="benefit">
+            <img src="{{ url_for('static', filename='images/nat.jpg') }}" alt="Healing">
+            <h3>Natural Healing</h3>
+            <p>Uses the power of nature to restore balance without side effects.</p>
+        </div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 🌿 Testimonials Section -->
+<section class="testimonials">
+    <h2>What Our Customers Say 🌸</h2>
+    <div class="testimonial-boxes">
+        <div class="testimonial">
+            <img src="{{ url_for('static', filename='images/C1.jpg') }}" alt="Customer 1">
+            <p>"The herbal tea I bought truly improved my sleep quality. Ayurveda really works!"</p>
+            <h4>— Priya R.</h4>
+        </div>
+        <div class="testimonial">
+            <img src="{{ url_for('static', filename='images/C3.jpg') }}" alt="Customer 2">
+            <p>"I’ve been using their Ayurvedic oils, and I feel more energetic and relaxed every day."</p>
+            <h4>— Pralistha K.</h4>
+        </div>
+        <div class="testimonial">
+            <img src="{{ url_for('static', filename='images/C2.jpg') }}" alt="Customer 3">
+            <p>"Authentic products, fast delivery, and amazing results. Highly recommend!"</p>
+            <h4>— Neha S.</h4>
+        </div>
+    </div>
+</section>
+
+<!-- 🌿 Call to Action -->
+<div class="cta">
+    <a href="{{ url_for('products_page') }}">🛒 Explore Our Products</a>
+</div>
+
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<h2>Admin Dashboard</h2>
+
+<div style="display:flex; gap:20px; flex-wrap:wrap;">
+    <div style="flex:1; background:#4CAF50; color:#fff; padding:20px; border-radius:10px;">
+        <h3>Total Orders</h3>
+        <p style="font-size:24px;">{{ total_orders }}</p>
+    </div>
+    <div style="flex:1; background:#2196F3; color:#fff; padding:20px; border-radius:10px;">
+        <h3>Total Revenue</h3>
+        <p style="font-size:24px;">₹{{ total_revenue }}</p>
+    </div>
+</div>
+
+<h3 style="margin-top:30px;">Top Users</h3>
+<ul>
+    {% for user in top_users %}
+        <li>{{ user[0] }} - {{ user[1] }} orders</li>
+    {% endfor %}
+</ul>
+
+<h3 style="margin-top:30px;">Recent Orders</h3>
+
+<input type="text" id="orderSearch" placeholder="Search orders..." style="margin-bottom:10px; padding:8px; width:100%; max-width:400px; border-radius:5px; border:1px solid #ccc;">
+
+<div style="max-height:400px; overflow-y:auto; border:1px solid #ddd; border-radius:5px;">
+<table style="width:100%; border-collapse:collapse; min-width:800px;">
+    <thead style="background:#f4f4f4; position:sticky; top:0;">
+        <tr>
+            <th style="padding:10px; text-align:left;">ID</th>
+            <th style="padding:10px; text-align:left;">User</th>
+            <th style="padding:10px; text-align:left;">Customer Name</th>
+            <th style="padding:10px; text-align:left;">Email</th>
+            <th style="padding:10px; text-align:left;">Address</th>
+            <th style="padding:10px; text-align:left;">Total</th>
+            <th style="padding:10px; text-align:left;">Date</th>
+        </tr>
+    </thead>
+    <tbody id="ordersTable">
+    {% for order in recent_orders %}
+        <tr style="border-bottom:1px solid #ddd; {% if order[9] > 1000 %}background:#fff9c4;{% endif %}">
+            <td style="padding:10px;">{{ order[0] }}</td>
+            <td style="padding:10px;">{{ order[2] }}</td>
+            <td style="padding:10px;">{{ order[3] }}</td>
+            <td style="padding:10px;">{{ order[4] }}</td>
+            <td style="padding:10px;">{{ order[6] }}</td>
+            <td style="padding:10px; font-weight:bold;">₹{{ order[9] }}</td>
+            <td style="padding:10px;">{{ order[10] }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+<h3 style="margin-top:30px;">Recent Logins</h3>
+<table border="1" cellpadding="8" cellspacing="0">
+    <tr>
+        <th>User Name</th>
+        <th>Email</th>
+        <th>Login Time</th>
+    </tr>
+    {% for login in login_history %}
+    <tr>
+        <td>{{ login[0] }}</td>
+        <td>{{ login[1] }}</td>
+        <td>{{ login[2] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<form method="POST" action="{{ url_for('admin_clear_orders') }}" onsubmit="return confirm('Are you sure you want to clear all orders?');" style="margin-bottom:15px;">
+    <button type="submit" style="padding:10px 20px; background:#f44336; color:#fff; border:none; border-radius:5px; cursor:pointer;">
+        Clear All Orders
+    </button>
+</form>
+
+<script>
+    // Simple search/filter for orders table
+    document.getElementById('orderSearch').addEventListener('keyup', function() {
+        const filter = this.value.toLowerCase();
+        const rows = document.querySelectorAll('#ordersTable tr');
+        rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(filter) ? '' : 'none';
+        });
+    });
+</script>
+
+{% endblock %}

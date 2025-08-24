@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+{% block title %}Checkout - Ayurveda Store{% endblock %}
+
+{% block content %}
+<style>
+/* ===== Checkout Page Styles ===== */
+.checkout-container {
+    max-width: 750px;
+    margin: 40px auto;
+    padding: 25px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    animation: fadeIn 0.8s ease-in-out;
+    font-family: Arial, sans-serif;
+}
+
+.checkout-container h2 {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 28px;
+    color: #2d6a4f;
+}
+
+.product-summary {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    animation: slideIn 1s ease;
+}
+
+.product-summary img {
+    width: 120px;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.product-summary h3 {
+    margin: 10px 0 5px;
+}
+
+.product-summary p {
+    font-size: 14px;
+    color: #555;
+}
+
+.price {
+    display: inline-block;
+    font-size: 18px;
+    font-weight: bold;
+    color: #e63946;
+}
+
+.checkout-form label {
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+}
+
+.checkout-form input,
+.checkout-form textarea,
+.checkout-form select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.checkout-form input:focus,
+.checkout-form textarea:focus,
+.checkout-form select:focus {
+    border-color: #2d6a4f;
+    box-shadow: 0 0 5px rgba(45,106,79,0.4);
+    outline: none;
+}
+
+.place-order-btn {
+    width: 100%;
+    background: #2d6a4f;
+    color: white;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.place-order-btn:hover {
+    background: #40916c;
+    transform: scale(1.03);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+</style>
+
+<div class="checkout-container">
+  <h2>🛒 Checkout</h2>
+
+  {% if product %}
+    <!-- Buy Now (Single Product) -->
+    <div class="product-summary">
+      <img src="{{ url_for('static', filename=product['image']) }}" alt="{{ product['name'] }}">
+      <h3>{{ product['name'] }}</h3>
+      <p>{{ product['description'] }}</p>
+      <span class="price">₹{{ product['price'] }}</span>
+    </div>
+  {% endif %}
+
+  {% if cart_items %}
+    <!-- Cart Checkout (Multiple Items) -->
+    <div class="product-summary">
+      <h3>Your Cart</h3>
+      <ul style="list-style:none; padding:0;">
+        {% for item in cart_items %}
+          <li>{{ item['name'] }} - ₹{{ item['price'] }}</li>
+        {% endfor %}
+      </ul>
+      <span class="price">Total: ₹{{ total }}</span>
+    </div>
+  {% endif %}
+
+  <form method="POST" action="{{ url_for('place_order') }}" class="checkout-form">
+    <!-- Hidden Fields -->
+    {% if product %}
+      <input type="hidden" name="product_name" value="{{ product['name'] }}">
+      <input type="hidden" name="product_price" value="{{ product['price'] }}">
+    {% else %}
+      <input type="hidden" name="product_name" value="Cart Items">
+      <input type="hidden" name="product_price" value="{{ total }}">
+    {% endif %}
+
+    <!-- Customer Information -->
+    <label>Full Name</label>
+    <input type="text" name="customer_name" placeholder="Enter your full name" required>
+
+    <label>Email</label>
+    <input type="email" name="email" placeholder="Enter your email" required>
+
+    <label>Phone Number</label>
+    <input type="tel" name="phone" placeholder="Enter your phone number" required>
+
+    <label>Shipping Address</label>
+    <textarea name="address" rows="3" placeholder="Enter your address" required></textarea>
+
+    <!-- Payment Method -->
+    <label>Payment Method</label>
+    <select name="payment_method" required>
+      <option value="">Select Payment Method</option>
+      <option value="cod">💵 Cash on Delivery (COD)</option>
+      <option value="upi">📱 UPI</option>
+      <option value="card">💳 Credit / Debit Card</option>
+    </select>
+
+    <!-- Place Order Button -->
+    <button type="submit" class="place-order-btn">✅ Place Order Securely</button>
+  </form>
+</div>
+{% endblock %}

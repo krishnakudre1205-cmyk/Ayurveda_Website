@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - Ayurveda Store</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <!-- Font Awesome for social icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+      margin: 0;
+      padding: 20px;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    h2 {
+      text-align: center;
+      color: #2e7d32;
+      margin-bottom: 10px;
+    }
+
+    p {
+      text-align: center;
+      color: #555;
+      margin-bottom: 30px;
+    }
+
+    .contact-container {
+      display: flex;
+      gap: 30px;
+      margin: auto;
+      max-width: 900px;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      animation: slideUp 1s ease;
+    }
+
+    /* Form */
+    .contact-form {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .contact-form label {
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      font-size: 15px;
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      border-color: #4CAF50;
+      box-shadow: 0 0 8px rgba(76, 175, 80, 0.3);
+      outline: none;
+    }
+
+    .contact-form button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .contact-form button:hover {
+      background-color: #388e3c;
+      transform: scale(1.05);
+    }
+
+    /* Info Box */
+    .contact-info {
+      flex: 1;
+      background: #f9fbe7;
+      padding: 20px;
+      border-radius: 12px;
+      transition: transform 0.3s ease;
+    }
+
+    .contact-info:hover {
+      transform: translateY(-5px);
+    }
+
+    .contact-info h3 {
+      margin-top: 0;
+      color: #2e7d32;
+    }
+
+    .contact-info p {
+      margin: 8px 0;
+      color: #444;
+    }
+
+    .contact-info img {
+      margin-top: 15px;
+      width: 150px;
+      border-radius: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .contact-info img:hover {
+      transform: scale(1.1);
+    }
+
+    /* Map */
+    .map-container {
+      margin-top: 15px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .map-container iframe {
+      width: 100%;
+      height: 200px;
+      border: none;
+    }
+
+    /* Social Icons */
+    .social-links {
+      margin-top: 20px;
+    }
+
+    .social-links a {
+      margin-right: 15px;
+      font-size: 24px;
+      color: #2e7d32;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .social-links a:hover {
+      color: #4CAF50;
+      transform: scale(1.2);
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .contact-container {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h2>📩 Contact Us</h2>
+  <p>We’d love to hear from you! Please fill out the form below.</p>
+
+  <div class="contact-container">
+      
+      <!-- Contact Form -->
+      <form action="/send_message" method="POST" class="contact-form">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" required>
+
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required>
+
+          <label for="message">Message:</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+
+          <button type="submit">🚀 Send Message</button>
+      </form>
+
+      <!-- Contact Info -->
+      <div class="contact-info">
+          <h3>📍 Our Address</h3>
+          <p><strong>Ayurveda Wellness Store</strong></p>
+          <p>SRM Layout, Ballari, Karnataka, India</p>
+          <p><strong>📞 Phone:</strong> +91 98765 43484</p>
+          <p><strong>📧 Email:</strong> aishwarya@ayurvedastore.com</p>
+          <img src="{{ url_for('static', filename='images/insta.jpg') }}" alt="Instagram QR">
+
+          <!-- Google Maps -->
+          <div class="map-container">
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.89983345763!2d76.9366!3d15.1394!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bb73b9a38b4b1b7%3A0xaaa6a1b674e3!2sBallari%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1692549598123!5m2!1sen!2sin" 
+              allowfullscreen="" 
+              loading="lazy" 
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+
+          <!-- Social Media -->
+          <div class="social-links">
+            <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://wa.me/919876543484" target="_blank"><i class="fab fa-whatsapp"></i></a>
+          </div>
+      </div>
+
+  </div>
+</body>
+</html>

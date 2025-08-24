@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    font-family: 'Arial', sans-serif;
+    background: #e0f2f1;
+    overflow: hidden;
+  }
+
+  /* Floating leaves background */
+  .leaf {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-image: url('/static/images/leaf.png'); /* Add a leaf PNG in static/images/ */
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.6;
+    animation-name: floatLeaf;
+    animation-duration: 10s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+
+  @keyframes floatLeaf {
+    0% {
+      transform: translateY(100vh) rotate(0deg);
+      opacity: 0;
+    }
+    10% { opacity: 0.3; }
+    50% { opacity: 0.6; }
+    100% {
+      transform: translateY(-100vh) rotate(360deg);
+      opacity: 0;
+    }
+  }
+
+  .register-container {
+    background: #ffffffdd;
+    padding: 40px 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    width: 400px;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+    overflow: hidden;
+    animation: fadeIn 1s ease forwards;
+  }
+
+  .register-container h3 {
+    margin-bottom: 25px;
+    color: #388e3c;
+    font-weight: 700;
+    animation: slideDown 0.8s ease forwards;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .input-field {
+    position: relative;
+    margin-bottom: 20px;
+  }
+
+  .input-field input {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 50px;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: all 0.3s ease;
+  }
+
+  .input-field input:focus {
+    border-color: #4caf50;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
+  }
+
+  .input-field label {
+    position: absolute;
+    top: 12px;
+    left: 15px;
+    color: #999;
+    pointer-events: none;
+    transition: 0.3s;
+  }
+
+  .input-field input:focus + label,
+  .input-field input:not(:placeholder-shown) + label {
+    top: -8px;
+    left: 12px;
+    font-size: 12px;
+    color: #4caf50;
+    background: #ffffffdd;
+    padding: 0 5px;
+    border-radius: 3px;
+  }
+
+  .register-btn {
+    padding: 12px;
+    background: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .register-btn:hover {
+    background: #43a047;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  }
+
+  .register-footer {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #555;
+  }
+
+  .register-footer a {
+    color: #4caf50;
+    text-decoration: none;
+    transition: 0.3s;
+  }
+
+  .register-footer a:hover {
+    text-decoration: underline;
+  }
+
+  /* Animations */
+  @keyframes fadeIn {
+    0% {opacity:0; transform: scale(0.95);}
+    100% {opacity:1; transform: scale(1);}
+  }
+
+  @keyframes slideDown {
+    0% {opacity:0; transform: translateY(-20px);}
+    100% {opacity:1; transform: translateY(0);}
+  }
+</style>
+
+<!-- Floating leaves container -->
+<div id="leaves">
+  {% for i in range(8) %}
+    <div class="leaf" style="left:{{ 10 + i*10 }}%; animation-delay: {{ i*1.5 }}s;"></div>
+  {% endfor %}
+</div>
+
+<div class="register-container">
+    <h3>🌿 Create an Account</h3>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div style="margin-bottom: 15px; color: #d32f2f;">
+          {% for msg in messages %}
+            <p>{{ msg }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST">
+        <div class="input-field">
+            <input type="text" name="name" required placeholder=" " />
+            <label>Name</label>
+        </div>
+        <div class="input-field">
+            <input type="email" name="email" required placeholder=" " />
+            <label>Email</label>
+        </div>
+        <div class="input-field">
+            <input type="text" name="phone" required placeholder=" " />
+            <label>Phone</label>
+        </div>
+        <div class="input-field">
+            <input type="password" name="password" required placeholder=" " />
+            <label>Password</label>
+        </div>
+        <button type="submit" class="register-btn">Register</button>
+    </form>
+
+    <div class="register-footer">
+        Already have an account? <a href="{{ url_for('login') }}">Login</a>
+    </div>
+</div>
+{% endblock %}

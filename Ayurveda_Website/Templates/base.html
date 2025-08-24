@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}Ayurveda Store{% endblock %}</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; }
+    header { background: #4CAF50; color: #fff; padding: 16px; text-align: center; position: relative; }
+    h1 { margin: 0; }
+    nav { display: flex; justify-content: space-between; align-items: center; position: relative; }
+
+    /* Navbar links */
+    .nav-links { display: flex; list-style: none; padding: 0; margin: 0; transition: transform 0.3s ease-in-out; }
+    .nav-item { margin: 0 10px; }
+    .nav-link { color: #fff; text-decoration: none; }
+    .nav-link:hover { text-decoration: underline; }
+
+    /* Flash message */
+    .flash-message {
+      background: #dff0d8;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #c3e6cb;
+      color: #155724;
+      border-radius: 5px;
+    }
+
+    /* Hamburger Menu */
+    .hamburger { display: none; flex-direction: column; cursor: pointer; z-index: 10; }
+    .hamburger div { width: 25px; height: 3px; background-color: #fff; margin: 4px 0; transition: all 0.3s ease; }
+
+    @media (max-width: 768px) {
+      .hamburger { display: flex; }
+      .nav-links {
+        flex-direction: column;
+        background-color: #4CAF50;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        width: 200px;
+        transform: translateX(100%);
+      }
+      .nav-links.active { transform: translateX(0); }
+      .nav-item { margin: 15px 0; text-align: center; }
+    }
+
+    /* Hamburger Animation */
+    .hamburger.active div:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.active div:nth-child(2) { opacity: 0; }
+    .hamburger.active div:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🌿 Ayurveda Store</h1>
+    <nav>
+      <!-- Hamburger -->
+      <div class="hamburger" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+
+      <!-- Navigation Links -->
+      <ul class="nav-links">
+        <li class="nav-item"><a href="{{ url_for('home') }}" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="{{ url_for('products_page') }}" class="nav-link">Products</a></li>
+        <li class="nav-item"><a href="{{ url_for('contact') }}" class="nav-link">Contact</a></li>
+        <li class="nav-item"><a href="{{ url_for('cart') }}" class="nav-link">🛒 Cart ({{ session.get('cart', [])|length }})</a></li>
+
+        {% if session.get('user_id') %}
+          <li class="nav-item"><span class="nav-link">Welcome, {{ session['user_name'] }}</span></li>
+          <li class="nav-item"><a href="{{ url_for('logout') }}" class="nav-link">Logout</a></li>
+        {% else %}
+          <li class="nav-item"><a href="{{ url_for('login') }}" class="nav-link">Login</a></li>
+          <li class="nav-item"><a href="{{ url_for('register') }}" class="nav-link">Register</a></li>
+        {% endif %}
+      </ul>
+
+      <!-- Flash messages -->
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <div class="flash-message">
+            {% for msg in messages %}<p>{{ msg }}</p>{% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+
+      {% if session.get('user_name') == 'Admin' %}
+  <li class="nav-item"><a href="{{ url_for('admin_dashboard') }}" class="nav-link">Dashboard</a></li>
+{% endif %}
+
+    </nav>
+  </header>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <script>
+    function toggleMenu() {
+      const navLinks = document.querySelector('.nav-links');
+      const hamburger = document.querySelector('.hamburger');
+      navLinks.classList.toggle('active');
+      hamburger.classList.toggle('active');
+    }
+  </script>
+</body>
+</html>

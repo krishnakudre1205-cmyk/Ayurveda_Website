@@ -1,0 +1,34 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* full height of viewport */
+}
+
+header {
+    background-color: #4CAF50;
+    padding: 10px;
+    color: white;
+    text-align: center;
+}
+
+nav a {
+    color: white;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+main {
+    flex: 1; /* makes main content expand */
+    padding: 20px;
+}
+
+footer {
+    background-color: #4CAF50;
+    padding: 10px;
+    text-align: center;
+    color: white;
+}

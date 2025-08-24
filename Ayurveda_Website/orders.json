@@ -1,0 +1,32 @@
+[
+  {
+    "date": "2025-08-21 17:29:13",
+    "customer_name": "ded",
+    "email": "krishnakudre.1205@gmail.com",
+    "phone": " 8123290683",
+    "address": "fefew",
+    "payment_method": "cod",
+    "items": [
+      {
+        "name": "Aloe Vera Gel",
+        "price": 180.0
+      }
+    ],
+    "total": 180.0
+  },
+  {
+    "date": "2025-08-21 22:07:00",
+    "customer_name": "Krishna",
+    "email": "krishnakudre.1205@gmail.com",
+    "phone": " 8123290683",
+    "address": "rtt",
+    "payment_method": "upi",
+    "items": [
+      {
+        "name": "Ghar Soap",
+        "price": 70.0
+      }
+    ],
+    "total": 70.0
+  }
+]

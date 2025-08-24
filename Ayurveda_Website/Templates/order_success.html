@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Order Success - Ayurveda Store{% endblock %}
+
+{% block content %}
+<style>
+.success-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    text-align: center;
+    animation: fadeIn 0.7s ease-in-out;
+}
+.success-icon {
+    font-size: 70px;
+    color: #4CAF50;
+    margin-bottom: 15px;
+    animation: bounce 1s ease;
+}
+.success-container h2 {
+    color: #2e7d32;
+    margin-bottom: 10px;
+}
+.success-container p {
+    color: #555;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+.order-details {
+    text-align: left;
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #eee;
+}
+.order-details strong {
+    color: #333;
+}
+.btn-home {
+    background: #4CAF50;
+    color: white;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: 0.3s;
+}
+.btn-home:hover {
+    background: #388e3c;
+    transform: scale(1.05);
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(25px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes bounce {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+</style>
+
+<div class="success-container">
+    <div class="success-icon">✅</div>
+    <h2>Order Placed Successfully!</h2>
+    <p>Thank you {{ name }} for shopping with us. Your Ayurvedic product will be delivered soon 🚚✨</p>
+
+   <div class="order-details">
+    <p><strong>Product:</strong> {{ product['name'] }}</p>
+    <p><strong>Price:</strong> ₹{{ product['price'] }}</p>
+    <p><strong>Payment Method:</strong> {{ payment_method }}</p>
+    <p><strong>Delivery Address:</strong> {{ address }}</p>
+</div>
+
+
+    <a href="{{ url_for('products_page') }}" class="btn-home">🛍️ Continue Shopping</a>
+</div>
+{% endblock %}

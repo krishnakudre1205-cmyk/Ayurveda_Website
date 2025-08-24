@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Admin Orders{% endblock %}
+{% block content %}
+<h2>All Orders</h2>
+<table border="1" cellpadding="8" cellspacing="0">
+    <tr>
+        <th>ID</th>
+        <th>User</th>
+        <th>Customer Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Address</th>
+        <th>Payment</th>
+        <th>Items</th>
+        <th>Total</th>
+        <th>Date</th>
+    </tr>
+    {% for order in orders %}
+    <tr>
+        <td>{{ order.id }}</td>
+        <td>{{ order.user_name }} ({{ order.user_id }})</td>
+        <td>{{ order.customer_name }}</td>
+        <td>{{ order.email }}</td>
+        <td>{{ order.phone }}</td>
+        <td>{{ order.address }}</td>
+        <td>{{ order.payment_method }}</td>
+        <td>
+            <ul>
+                {% for item in order.items %}
+                    <li>{{ item.name }} - ₹{{ item.price }}</li>
+                {% endfor %}
+            </ul>
+        </td>
+        <td>₹{{ order.total }}</td>
+        <td>{{ order.date }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
